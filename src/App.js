@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
+ 
+  const handleChangeBlur = event => {
+    console.log(event.target.value);
+}
+
+const handleChangePassword = event => {
+    console.log(event.target.value);
+}
+
+const handleOnSubmit = event => {
+  console.log('form submit process');
+  event.preventDefault()
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+         <h1>----------------------------------</h1> <br /><br />
+         <form onSubmit={handleOnSubmit}>
+           <input onBlur={handleChangeBlur} placeholder="your email" />
+           <input onBlur={handleChangePassword} type="password"  placeholder="your password"/> 
+           <br /><br />
+           <input type="submit" value="login" />
+         </form>
     </div>
   );
 }
