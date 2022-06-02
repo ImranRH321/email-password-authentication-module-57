@@ -8,19 +8,27 @@ import { Button, Form } from "react-bootstrap";
 const auth = getAuth(app);
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [error, setError] = useState("");
+  const [registered, setRegister] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  // handle regester check handle ar
+  const handleResisterCheck = event => {
+    setRegister(event.target.checked);
+  };
+
+  // email input onBlur
   const handleEmailBlur = event => {
     setEmail(event.target.value);
   };
 
+  //  password input onBlur
   const handlePasswordBlur = event => {
     setPassword(event.target.value);
   };
-
+  // form submit onSubmit
   const handleFormSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -48,10 +56,10 @@ function App() {
       });
     event.preventDefault();
   };
-  console.log(error);
+
   return (
     <div className="container w-50 mx-auto">
-      <h1>Register Login</h1>
+      <h1 className="text-primary">Please {registered? 'registered': 'Login'}</h1>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -82,11 +90,15 @@ function App() {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
+          <Form.Check
+            onChange={handleResisterCheck}
+            type="checkbox"
+            label="Check me out"
+          />
         </Form.Group>
         <h3 className="text-danger">{error}</h3>
         <Button className="btn" variant="primary" type="submit">
-          Submit
+          {registered? 'Registered':'Login'}
         </Button>
       </Form>
     </div>
