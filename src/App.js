@@ -1,30 +1,68 @@
-import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
+import app from "./firebase.init";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth(app);
 
 function App() {
- 
-  const handleChangeBlur = event => {
-    console.log(event.target.value);
-}
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-const handleChangePassword = event => {
-    console.log(event.target.value);
-}
+  const handleEmailBlur = event => {
+    setEmail(event.target.value);
+  };
 
-const handleOnSubmit = event => {
-  console.log('form submit process');
-  event.preventDefault()
-}
+  const handlePasswordBlur = event => {
+    setPassword(event.target.value);
+  };
+
+  const handleFormSubmit = event => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    event.preventDefault();
+  };
 
   return (
-    <div className="App">
-         <h1>----------------------------------</h1> <br /><br />
-         <form onSubmit={handleOnSubmit}>
-           <input onBlur={handleChangeBlur} placeholder="your email" />
-           <input onBlur={handleChangePassword} type="password"  placeholder="your password"/> 
-           <br /><br />
-           <input type="submit" value="login" />
-         </form>
+    <div className="text-center container">
+      <h1>Register Login</h1>
+      <form onSubmit={handleFormSubmit}>
+        <div class="">
+          <label for="staticEmail" class="col-sm-2 col-form-label ">
+            Email
+          </label>
+          <div>
+            <input
+              onBlur={handleEmailBlur}
+              type="text"
+              readonly
+              className="flied"
+              id="staticEmail"
+            />
+          </div>
+        </div>
+        <div class="">
+          <label for="inputPassword" class="col-sm-2 col-form-label">
+            Password
+          </label>
+          <div class="">
+            <input
+              onBlur={handlePasswordBlur}
+              type="password"
+              className="flied"
+              id="inputPassword"
+            />
+          </div>
+        </div>
+        <br />
+        <button type="submit">Sign in</button>
+      </form>
     </div>
   );
 }
