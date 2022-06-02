@@ -20,11 +20,12 @@ form{
   box-sizing: border-box;
 }
 
-button{
-  background-color: black;
+.btn{
+  background-color: black !important;
   padding: 10px 20px;
   font-size: 23px;
   width: 30%;
   color: white;
   border-radius: 5px;
+  display: block;
 }
